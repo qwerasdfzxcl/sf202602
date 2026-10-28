@@ -7,5 +7,7 @@ Print double.
 Theorem plus_double_comm : forall n m : nat,
   double (n + m) = double n + double m.
 Proof.
-  exact FILL_IN_HERE.
+  intros n m. induction n as [|n' IHn'].
+  - simpl. reflexivity.
+  - simpl. rewrite IHn'. reflexivity. 
 Qed.

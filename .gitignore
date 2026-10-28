@@ -15,3 +15,8 @@ _opam/
 Makefile.coq
 Makefile.coq.conf
 .Makefile.coq.d
+
+# Local editor settings and downloaded textbook
+/.vscode/
+/lf.tgz
+/lf/

@@ -6,6 +6,14 @@ Theorem xorb_fn_applied_twice :
   (forall (x : bool), f x = xorb y x) ->
   forall (b : bool), f (f b) = b.
 Proof.
-  exact FILL_IN_HERE.
+  intros f y.
+  intros H.
+  intros b.
+  rewrite H. rewrite H.
+  destruct y, b.
+  - simpl. reflexivity.
+  - simpl. reflexivity.  
+  - simpl. reflexivity.
+  - simpl. reflexivity.
 Qed.
 

@@ -5,5 +5,11 @@ Theorem xorb_eq_andb :
   (xorb b c = andb b c) ->
   b = c.
 Proof.
-  exact FILL_IN_HERE.
+  intros b c.
+  intros H.
+  destruct b, c.
+  - simpl. reflexivity.
+  - simpl in H. simpl. rewrite H. reflexivity.
+  - simpl in H. simpl. rewrite H. reflexivity.
+  - simpl. reflexivity.
 Qed.
