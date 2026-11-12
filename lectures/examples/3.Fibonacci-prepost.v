@@ -72,7 +72,10 @@ Module FibA. Section FibA.
     end.
   
   Definition body (n : nat) : itree crisE nat :=
-    Ret (fib n).
+    assume(n <= 1000);;; (* PreCondition *)
+    r <- trigger (Choose nat);;
+    guarantee(r = fib n);;; (* PostCondition *)
+    Ret r.
 
   Definition fnsems : fnsemmap :=
     {[fid FibH.fibonacci # (msk_scp FibH.scopes msk_true,
@@ -163,12 +166,16 @@ Module FibCorrect. Section FibCorrect.
   Lemma sim_fibonacci :
     ⊢ ISim.sim_fun open FibA.t FibI.t Ist (fid FibH.fibonacci).
   Proof.
-    cStartFunSim. rewrite /FibA.body /FibI.body.
+    cStartFunSim; simpl. rewrite /FibA.body /FibI.body.
     cStepsS.
     destruct (Any.downcast arg) as [n|] eqn:Harg;
       cStepsS; try contradiction.
     iDestruct "IST" as (xs) "(MEM & %Hxs)".
-    cStepsT. rewrite Harg. cStepsT.
+    cStepsT. cForceS (FibA.fib n).
+    cForceS. iSplit.
+    { eauto. }
+    cStepsS.
+
     destruct (xs !! n) as [v|] eqn:Hentry.
     - rewrite (Hxs n v Hentry). cStepsT.
       cStep. iSplit; first done. iExists xs. iFrame. done.
